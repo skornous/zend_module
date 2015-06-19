@@ -4,8 +4,12 @@ namespace Users\Controller;
 
 use Users\Form\Register;
 use Users\InputFilter\User;
+use Users\Model\UserTable;
+use Users\Model\User as UserModel;
+use Zend\Db\TableGateway\TableGateway;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Zend\Db\ResultSet\ResultSet;
 
 class RegisterController extends AbstractActionController {
 
@@ -50,10 +54,10 @@ class RegisterController extends AbstractActionController {
 		$sm = $this->getServiceLocator();
 		$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
 		$resultSetPrototype = new ResultSet();
-		$resultSetPrototype->setArrayObjectPrototype(new User);
+		$resultSetPrototype->setArrayObjectPrototype(new UserModel);
 		$tableGateway = new TableGateway("user", $dbAdapter, null, $resultSetPrototype);
 
-		$user = new User();
+		$user = new UserModel();
 		$user->exchangeArray($data);
 		$userTable = new UserTable($tableGateway);
 		$userTable->saveUser($user);
