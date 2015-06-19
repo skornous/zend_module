@@ -1,0 +1,15 @@
+<h2>Inscription</h2>
+<section class="register">
+	<?php if($this->error): ?>
+	<p class="error">Des erreurs sont intervenues durant la valiation du formulaire</p>
+	<?php endif; ?>
+	<p>
+		<?php
+			$form = $this->registerForm;
+			$form->setAttribute("class", "form-horizontal");
+			$form->setAttribute('action', $this->url(null, ['controller' => 'Register', 'action' => 'process']));
+			echo $this->form()->render($form);
+		?>
+	</p>
+	<a href="<?php echo $this->url('users'); ?>"> << Retour à l'accueil</a>
+</section>
