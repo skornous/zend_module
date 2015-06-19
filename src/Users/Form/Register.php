@@ -4,6 +4,7 @@ namespace Users\Form;
 use Zend\Form\Form;
 use Zend\Form\Element;
 use Zend\Captcha\Dumb;
+use Zend\Captcha\Image;
 
 
 class Register extends Form{
@@ -58,11 +59,21 @@ class Register extends Form{
 		$this->add($csrf);
 
 		// Captcha
-		$captchaText = new Dumb;
-		$captchaText->setLabel("Veuillez recopiez ces mots");
+//		$captchaText = new Dumb;
+//		$captchaText->setLabel("Veuillez recopiez ces mots");
+		$captchaImg = new Image([
+			"font" => "C:\\Windows\\Fonts\\Arial.ttf", // to change if not using Windows
+			"width" => 250,
+			"height" => 100,
+			"dotNoiseLevel" => 40,
+			"lineNoiseLevel" => 3,
+		]);
+		$captchaImg->setImgDir("./public/img");
+		$captchaImg->setImgUrl("/img");
 
 		$captcha = new Element\Captcha("captcha");
-		$captcha->setCaptcha($captchaText);
+//		$captcha->setCaptcha($captchaText);
+		$captcha->setCaptcha($captchaImg);
 		$captcha->setLabel("Vérifiez que vous êtes humain");
 		$this->add($captcha);
 
