@@ -3,9 +3,13 @@
 namespace Users\Form;
 use Zend\Form\Form;
 use Zend\Form\Element;
+use Zend\Captcha\Dumb;
 
 
 class Register extends Form{
+	/**
+	 * @param null $name
+	 */
 	public function __construct($name=null) {
 		parent::__construct("Register");
 
@@ -52,6 +56,15 @@ class Register extends Form{
 		// token CSRF
 		$csrf = new Element\Csrf("security");
 		$this->add($csrf);
+
+		// Captcha
+		$captchaText = new Dumb;
+		$captchaText->setLabel("Veuillez recopiez ces mots");
+
+		$captcha = new Element\Captcha("captcha");
+		$captcha->setCaptcha($captchaText);
+		$captcha->setLabel("Vérifiez que vous êtes humain");
+		$this->add($captcha);
 
 		// bouton validation
 		$validate = new Element\Submit("Valider");
