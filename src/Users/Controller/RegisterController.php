@@ -7,8 +7,7 @@ use Users\InputFilter\User;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
-class RegisterController extends AbstractActionController
-{
+class RegisterController extends AbstractActionController {
 
     public function indexAction() {
 	    $form = new Register("formulaire");
@@ -35,8 +34,9 @@ class RegisterController extends AbstractActionController
 			$view->setTemplate("users/register/index");
 			return $view;
 		}
-		$cleanData = $form->getData();
-		return $this->redirect()->toRoute(null,[
+		$cleanData = $form->getData(); // "data" is now clean
+		$this->createUser($cleanData); // saving user with clean data
+		return $this->redirect()->toRoute(null,[ //redirect to confirm
 			"controller" => "register",
 			"action" => "confirm"
 		]);
@@ -44,6 +44,21 @@ class RegisterController extends AbstractActionController
 
 	public function confirmAction() {
 		return new ViewModel();
+	}
+
+	protected function createUser(array $data) {
+		$sm = $this->getServiceLocator();
+		$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+		$resultSetPrototype = new ResultSet();
+		$resultSetPrototype->setArrayObjectPrototype(new User);
+		$tableGateway = new TableGateway("user", $dbAdapter, null, $resultSetPrototype);
+
+		$user = new User();
+		$user->exchangeArray($data);
+		$userTable = new UserTable($tableGateway);
+		$userTable->saveUser($user);
+
+		return true;
 	}
 }
 

@@ -50,18 +50,4 @@ class UserTable {
 		}
 	}
 
-	function createUser(array $data) {
-		$sm = $this->getServiceLocator();
-		$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-		$resultSetPrototype = new ResultSet();
-		$resultSetPrototype->setArrayObjectPrototype(new User);
-		$tableGateway = new TableGateway("user", $dbAdapter, null, $resultSetPrototype);
-
-		$user = new User();
-		$user->exchangeArray($data);
-		$userTable = new UserTable($tableGateway);
-		$userTable->saveUser($user);
-
-		return true;
-	}
 }
