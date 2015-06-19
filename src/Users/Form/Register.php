@@ -49,6 +49,10 @@ class Register extends Form{
 		$confirm->setAttribute("required", "required");
 		$this->add($confirm);
 
+		// token CSRF
+		$csrf = new Element\Csrf("security");
+		$this->add($csrf);
+
 		// bouton validation
 		$validate = new Element\Submit("Valider");
 		$validate->setLabel("Valider");

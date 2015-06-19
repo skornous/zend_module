@@ -40,6 +40,14 @@ class Login extends Form {
 			]
 		]);
 
+		// token CSRF
+		$this->add([
+			'name' => 'security',
+			'attributes' => [
+				'type' => 'csrf',
+			],
+		]);
+
 		// validate button
 		$this->add([
 			'name' => 'connect',
