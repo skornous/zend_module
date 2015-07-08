@@ -38,13 +38,25 @@
 			),
 		),
 		'service_manager' => array(
-			'abstract_factories' => array(
-				'Zend\Cache\Service\StorageCacheAbstractServiceFactory',
-				'Zend\Log\LoggerAbstractServiceFactory',
-			),
-			'aliases' => array(
-				'translator' => 'MvcTranslator',
-			),
+			'abstract_factories' => [
+				'user-table' => function($sm) {
+					$tableGateway = $sm->get('user-table-gateway');
+					$table = new \Users\Model\UserTable($tableGateway);
+
+					return $table;
+				},
+				'user-table-gateway' => function($sm) {
+					$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+					$resultSetPrototype = new \Zend\Db\ResultSet\ResultSet();
+					$resultSetPrototype->setArrayObjectPrototype(new UserModel);
+					return new TableGateway("user", $dbAdapter, null, $resultSetPrototype);
+				},
+			],
+			'aliases' => [],
+			'factories' => [],
+			'invokables' => [],
+			'services' => [],
+			'shared' => [],
 		),
 		'translator' => array(
 			'locale' => 'en_US',
