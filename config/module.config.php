@@ -45,7 +45,9 @@
 				'register-form' => '\Users\Form\Factory\RegisterFactory',
 				'auth-service' => '\Users\Auth\Factory\AuthServiceFactory',
 			],
-			'aliases' => [],
+			'aliases' => [
+				'db-adapter' => 'Zend\Db\Adapter\Adapter',
+			],
 			'factories' => [],
 			'invokables' => [],
 			'services' => [],

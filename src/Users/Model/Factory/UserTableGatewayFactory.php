@@ -15,7 +15,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 class UserTableGatewayFactory implements FactoryInterface {
 
 	public function createService(ServiceLocatorInterface $sm) {
-		$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+		$dbAdapter = $sm->get('db-adapter');
 		$resultSetPrototype = new \Zend\Db\ResultSet\ResultSet();
 		$resultSetPrototype->setArrayObjectPrototype(new \Users\Model\User);
 		return new TableGateway("user", $dbAdapter, null, $resultSetPrototype);

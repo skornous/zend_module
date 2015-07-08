@@ -11,7 +11,7 @@ use Zend\ServiceManager\ServiceLocatorInterface;
 class AuthServiceFactory implements FactoryInterface {
 
 	public function createService(ServiceLocatorInterface $sm) {
-		$dbAdapter = $this->getServiceLocator()->get('Zend\Db\Adapter\Adapter');
+		$dbAdapter = $this->getServiceLocator()->get('db-adapter');
 		$dbTableAuthAdapter = new CredentialTreatmentAdapter($dbAdapter, "user", "email", "password", 'SHA1(?)');
 		$authService = new AuthenticationService(null, $dbTableAuthAdapter);
 //		$authService->setAdapter($dbTableAuthAdapter);
