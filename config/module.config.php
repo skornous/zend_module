@@ -38,7 +38,8 @@
 			),
 		),
 		'service_manager' => array(
-			'abstract_factories' => [
+			'abstract_factories' => [],
+			'factories' => [
 				'user-table' => '\Users\Model\Factory\UserTableFactory',
 				'user-table-gateway' => '\Users\Model\Factory\UserTableGatewayFactory',
 				'login-form' => '\Users\Form\Factory\LoginFactory',
@@ -48,7 +49,6 @@
 			'aliases' => [
 				'db-adapter' => 'Zend\Db\Adapter\Adapter',
 			],
-			'factories' => [],
 			'invokables' => [],
 			'services' => [],
 			'shared' => [],
