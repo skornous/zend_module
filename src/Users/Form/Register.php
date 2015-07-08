@@ -3,7 +3,6 @@
 namespace Users\Form;
 use Zend\Form\Form;
 use Zend\Form\Element;
-use Zend\Captcha\Dumb;
 use Zend\Captcha\Image;
 
 

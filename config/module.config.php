@@ -39,18 +39,11 @@
 		),
 		'service_manager' => array(
 			'abstract_factories' => [
-				'user-table' => function($sm) {
-					$tableGateway = $sm->get('user-table-gateway');
-					$table = new \Users\Model\UserTable($tableGateway);
-
-					return $table;
-				},
-				'user-table-gateway' => function($sm) {
-					$dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
-					$resultSetPrototype = new \Zend\Db\ResultSet\ResultSet();
-					$resultSetPrototype->setArrayObjectPrototype(new UserModel);
-					return new TableGateway("user", $dbAdapter, null, $resultSetPrototype);
-				},
+				'user-table' => '\Users\Model\Factory\UserTableFactory',
+				'user-table-gateway' => '\Users\Model\Factory\UserTableGatewayFactory',
+				'login-form' => '\Users\Form\Factory\LoginFactory',
+				'register-form' => '\Users\Form\Factory\RegisterFactory',
+				'auth-service' => '\Users\Auth\Factory\AuthServiceFactory',
 			],
 			'aliases' => [],
 			'factories' => [],

@@ -2,8 +2,6 @@
 
 namespace Users\Controller;
 
-use Users\Form\Register;
-use Users\InputFilter\User;
 use Users\Model\User as UserModel;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
@@ -11,7 +9,7 @@ use Zend\View\Model\ViewModel;
 class RegisterController extends AbstractActionController {
 
     public function indexAction() {
-	    $form = new Register("formulaire");
+	    $form = $this->getServiceLocator()->get('register-form');
         return new ViewModel(['registerForm' => $form]);
     }
 
@@ -23,8 +21,7 @@ class RegisterController extends AbstractActionController {
 			]);
 		}
 		$post = $this->request->getPost();
-		$form = new Register;
-		$form->setInputFilter(new User);
+		$form = $this->getServiceLocator()->get('register-form');
 		$form->setData($post);
 
 		if ($form->isValid() === false){
